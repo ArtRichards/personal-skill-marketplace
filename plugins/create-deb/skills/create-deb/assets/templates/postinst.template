@@ -1,0 +1,52 @@
+#!/bin/bash
+# Post-installation script for PACKAGE_NAME
+# This script runs after package files are extracted
+set -e
+
+case "$1" in
+    configure)
+        # ============================================
+        # Add your post-installation commands here
+        # ============================================
+
+        # --- Systemd Service (uncomment if needed) ---
+        # systemctl daemon-reload
+        # systemctl enable PACKAGE_NAME.service
+        # systemctl start PACKAGE_NAME.service
+
+        # --- User Service (uncomment if needed) ---
+        # Note: User services should be enabled by the user, not in postinst
+        # Just reload the daemon
+        # systemctl --global daemon-reload || true
+
+        # --- Set Permissions (uncomment if needed) ---
+        # chmod 755 /usr/bin/PACKAGE_NAME
+        # chown root:root /etc/PACKAGE_NAME/config
+
+        # --- Create Directories (uncomment if needed) ---
+        # mkdir -p /var/lib/PACKAGE_NAME
+        # mkdir -p /var/log/PACKAGE_NAME
+
+        # --- Create User/Group (uncomment if needed) ---
+        # getent group PACKAGE_NAME || groupadd --system PACKAGE_NAME
+        # getent passwd PACKAGE_NAME || useradd --system --no-create-home \
+        #     --gid PACKAGE_NAME --shell /usr/sbin/nologin PACKAGE_NAME
+
+        # --- Update Caches (uncomment if needed) ---
+        # update-desktop-database /usr/share/applications || true
+        # gtk-update-icon-cache /usr/share/icons/hicolor || true
+
+        echo "PACKAGE_NAME configured successfully."
+        ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+        # Handle rollback scenarios
+        ;;
+
+    *)
+        echo "postinst called with unknown argument '$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

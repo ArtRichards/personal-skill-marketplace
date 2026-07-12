@@ -1,0 +1,31 @@
+{
+  "name": "create-deb",
+  "version": "0.1.0",
+  "description": "Package scripts, applications, or services as Debian (.deb) packages, with reference docs and maintainer-script templates.",
+  "author": {
+    "name": "Art Richards"
+  },
+  "repository": "https://github.com/ArtRichards/personal-skill-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "debian",
+    "packaging",
+    "deb"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Create Deb Package",
+    "shortDescription": "Package scripts and apps as Debian (.deb) packages.",
+    "longDescription": "create-deb packages any script, application, or service as a Debian (.deb) package for system-wide installation. It ships reference docs for control files, maintainer scripts, and common pitfalls, plus templates for control, postinst, and postrm.",
+    "developerName": "Art Richards",
+    "category": "Productivity",
+    "capabilities": [
+      "Debian package creation",
+      "Control file authoring",
+      "Maintainer script generation",
+      "Packaging pitfall avoidance"
+    ],
+    "defaultPrompt": "Package this project as a Debian (.deb) package with the create-deb skill."
+  }
+}

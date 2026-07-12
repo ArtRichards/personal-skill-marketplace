@@ -1,0 +1,55 @@
+# DEBIAN/control Template
+# Required fields are marked with [REQUIRED]
+# Remove comments before using
+
+# [REQUIRED] Package name (lowercase, alphanumeric, hyphens)
+Package: package-name
+
+# [REQUIRED] Version in format: upstream_version-debian_revision
+Version: 1.0.0-1
+
+# [REQUIRED] Target architecture: all, amd64, i386, arm64, armhf
+Architecture: all
+
+# [REQUIRED] Package maintainer
+Maintainer: Your Name <your.email@example.com>
+
+# [REQUIRED] Short description (single line, max 80 chars)
+# Long description follows, each line starts with a space
+# Use " ." for blank lines in long description
+Description: Short one-line description of the package
+ Longer description that can span multiple lines.
+ Each line of the long description must start with a space.
+ .
+ You can have multiple paragraphs separated by lines
+ containing only a space and a period.
+
+# Optional fields below - uncomment as needed
+
+# Package category
+#Section: utils
+
+# Installation priority: required, important, standard, optional, extra
+#Priority: optional
+
+# Runtime dependencies (comma-separated)
+#Depends: bash, coreutils, package (>= 1.0)
+
+# Suggested packages
+#Recommends: recommended-package
+#Suggests: optional-package
+
+# Conflicts with these packages
+#Conflicts: incompatible-package
+
+# Replaces files from these packages
+#Replaces: old-package
+
+# Provides virtual package
+#Provides: virtual-package-name
+
+# Homepage URL
+#Homepage: https://github.com/user/project
+
+# Installed size in KB (dpkg-deb calculates automatically if omitted)
+#Installed-Size: 100

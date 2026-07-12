@@ -27,6 +27,15 @@ To adopt it on a host, create `~/system-docs/` with a `system-status.md` and
 point your `CLAUDE.md` at it (see the skill's SKILL.md for the conventions the
 skill enforces).
 
+### create-deb
+
+Packages any script, application, or service as a Debian (`.deb`) package for
+system-wide installation. Invoke with `/create-deb [source-path]`. Ships
+reference docs (control files, maintainer scripts, common pitfalls) and
+templates for `control`, `postinst`, and `postrm`. Moved here from the former
+standalone [create-deb-skill](https://github.com/ArtRichards/create-deb-skill)
+repository.
+
 ## Install
 
 For Claude Code:
@@ -34,6 +43,7 @@ For Claude Code:
 ```bash
 claude plugin marketplace add ArtRichards/personal-skill-marketplace
 claude plugin install update-system-status@personal-skill-marketplace
+claude plugin install create-deb@personal-skill-marketplace
 ```
 
 For Codex:
@@ -41,6 +51,7 @@ For Codex:
 ```bash
 codex plugin marketplace add ArtRichards/personal-skill-marketplace --ref main
 codex plugin add update-system-status@personal-skill-marketplace
+codex plugin add create-deb@personal-skill-marketplace
 ```
 
 ## Layout
@@ -60,9 +71,11 @@ codex plugin add update-system-status@personal-skill-marketplace
 3. Run the same checks as CI (`.github/workflows/validate.yml`): JSON manifests
    parse, every skill directory contains a `SKILL.md`, no nested `.git`
    directories, and `claude plugin validate .` passes.
-4. Commit to `main` and tag `vX.Y.Z` (annotated) to match the manifest version.
-   The marketplace installs from `main`; the tag is a release marker for
-   history and rollback.
+4. Commit to `main` and add an annotated per-plugin tag
+   `<plugin>-vX.Y.Z` matching the manifest version (e.g.
+   `create-deb-v0.1.0`). The marketplace installs from `main`; tags are
+   release markers for history and rollback. (The repo-wide `v0.1.0` tag
+   predates the second plugin.)
 
 ## License
 

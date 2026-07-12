@@ -20,6 +20,22 @@
         "documentation",
         "homelab"
       ]
+    },
+    {
+      "name": "create-deb",
+      "source": "./plugins/create-deb",
+      "description": "Package scripts, applications, or services as Debian (.deb) packages, with reference docs and maintainer-script templates.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Art Richards"
+      },
+      "category": "Productivity",
+      "tags": [
+        "agent-skills",
+        "debian",
+        "packaging",
+        "deb"
+      ]
     }
   ]
 }

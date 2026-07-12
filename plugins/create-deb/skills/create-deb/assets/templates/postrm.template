@@ -1,0 +1,58 @@
+#!/bin/bash
+# Post-removal script for PACKAGE_NAME
+# This script runs after package files are removed
+set -e
+
+case "$1" in
+    remove)
+        # ============================================
+        # Commands to run when package is removed
+        # (config files are kept)
+        # ============================================
+
+        # --- Stop Systemd Service (uncomment if needed) ---
+        # systemctl stop PACKAGE_NAME.service || true
+        # systemctl disable PACKAGE_NAME.service || true
+        # systemctl daemon-reload
+
+        echo "PACKAGE_NAME removed."
+        ;;
+
+    purge)
+        # ============================================
+        # Commands to run when package is purged
+        # (config files are also removed)
+        # ============================================
+
+        # --- Remove Configuration (uncomment if needed) ---
+        # rm -rf /etc/PACKAGE_NAME
+
+        # --- Remove Variable Data (uncomment if needed) ---
+        # rm -rf /var/lib/PACKAGE_NAME
+        # rm -rf /var/log/PACKAGE_NAME
+
+        # --- Remove User/Group (uncomment if needed) ---
+        # userdel PACKAGE_NAME || true
+        # groupdel PACKAGE_NAME || true
+
+        # --- Update Caches (uncomment if needed) ---
+        # update-desktop-database /usr/share/applications || true
+
+        echo "PACKAGE_NAME purged."
+        ;;
+
+    upgrade|failed-upgrade|disappear)
+        # Nothing to do for upgrades
+        ;;
+
+    abort-install|abort-upgrade)
+        # Handle aborted installation
+        ;;
+
+    *)
+        echo "postrm called with unknown argument '$1'" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
