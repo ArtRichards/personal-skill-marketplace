@@ -1,0 +1,25 @@
+{
+  "name": "personal-skill-marketplace",
+  "description": "ArtRichards Personal Skill Marketplace — personal host-maintenance and workflow skills for Claude Code.",
+  "owner": {
+    "name": "Art Richards"
+  },
+  "plugins": [
+    {
+      "name": "update-system-status",
+      "source": "./plugins/update-system-status",
+      "description": "Keep a host's ~/system-docs/ accurate: a living system-status record, plan/spec lifecycle with dated archive, and an INDEX.md kept in lockstep with the directory.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Art Richards"
+      },
+      "category": "Productivity",
+      "tags": [
+        "agent-skills",
+        "system-administration",
+        "documentation",
+        "homelab"
+      ]
+    }
+  ]
+}

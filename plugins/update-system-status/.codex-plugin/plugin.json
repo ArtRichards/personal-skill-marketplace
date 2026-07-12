@@ -1,0 +1,31 @@
+{
+  "name": "update-system-status",
+  "version": "0.1.0",
+  "description": "Keep a host's ~/system-docs/ accurate: a living system-status record, plan/spec lifecycle with dated archive, and an INDEX.md kept in lockstep with the directory.",
+  "author": {
+    "name": "Art Richards"
+  },
+  "repository": "https://github.com/ArtRichards/personal-skill-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "system-administration",
+    "documentation",
+    "homelab"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Update System Status",
+    "shortDescription": "Keep host system docs accurate, indexed, and archived.",
+    "longDescription": "update-system-status maintains a host's ~/system-docs/ directory: it updates the living system-status.md facts record at the end of turns that touched system state, keeps plans and specs in the right place, archives completed plans into dated directories, and keeps INDEX.md in lockstep with the directory contents.",
+    "developerName": "Art Richards",
+    "category": "Productivity",
+    "capabilities": [
+      "System documentation maintenance",
+      "Plan and spec lifecycle management",
+      "Dated archival of completed plans",
+      "Index generation and drift repair"
+    ],
+    "defaultPrompt": "Run the update-system-status pass over ~/system-docs/ for the system changes made this session."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "personal-skill-marketplace",
+  "interface": {
+    "displayName": "ArtRichards Personal Skill Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "update-system-status",
+      "source": {
+        "source": "local",
+        "path": "./plugins/update-system-status"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+name: Validate marketplace
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate JSON manifests
+        run: |
+          python3 -m json.tool .agents/plugins/marketplace.json >/dev/null
+          python3 -m json.tool .claude-plugin/marketplace.json >/dev/null
+          for plugin in plugins/*/; do
+            python3 -m json.tool "$plugin/.claude-plugin/plugin.json" >/dev/null
+            python3 -m json.tool "$plugin/.codex-plugin/plugin.json" >/dev/null
+          done
+
+      - name: Validate plugin payload shape
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          marketplace = json.loads(
+              Path(".claude-plugin/marketplace.json").read_text(encoding="utf-8")
+          )
+          listed = {p["name"] for p in marketplace["plugins"]}
+          on_disk = {p.name for p in Path("plugins").iterdir() if p.is_dir()}
+          if listed != on_disk:
+              raise SystemExit(
+                  f"Marketplace/plugins mismatch: listed={sorted(listed)} "
+                  f"on_disk={sorted(on_disk)}"
+              )
+
+          for plugin in sorted(on_disk):
+              root = Path("plugins") / plugin
+              manifest = json.loads(
+                  (root / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
+              )
+              entry = next(p for p in marketplace["plugins"] if p["name"] == plugin)
+              if manifest["version"] != entry["version"]:
+                  raise SystemExit(
+                      f"{plugin}: plugin.json version {manifest['version']} != "
+                      f"marketplace entry {entry['version']}"
+                  )
+              skills = root / "skills"
+              skill_dirs = [p for p in skills.iterdir() if p.is_dir()]
+              if not skill_dirs:
+                  raise SystemExit(f"{plugin}: no skill directories under {skills}")
+              for skill in skill_dirs:
+                  if skill.name != "_shared" and not (skill / "SKILL.md").exists():
+                      raise SystemExit(f"Missing {skill / 'SKILL.md'}")
+
+          nested_git = list(Path("plugins").rglob(".git"))
+          if nested_git:
+              raise SystemExit(f"Nested .git dirs are not allowed: {nested_git}")
+          PY
