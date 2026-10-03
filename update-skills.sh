@@ -6,6 +6,7 @@
 # Safe to re-run. Say "update my ArtRichards skills" to an agent and it runs this.
 set -uo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export PATH="$HOME/.local/bin:$PATH"   # pipx / npm-global installs (docs, codex, claude) even over non-login ssh
 step() { printf '\n== %s\n' "$*"; }
 
 step "personal-skill-marketplace: pull + relink"
@@ -27,7 +28,7 @@ if command -v claude >/dev/null 2>&1; then
 fi
 
 if command -v codex >/dev/null 2>&1; then
-  if codex plugin list 2>/dev/null | grep -q "agent-playbook-suite"; then
+  if codex plugin list 2>&1 | grep -q "agent-playbook-suite@agent-playbook-suite"; then
     step "Codex: agent-playbook-suite marketplace"
     codex plugin marketplace upgrade agent-playbook-suite || true
     echo "   (if Codex keeps the old copy: codex plugin remove agent-playbook-suite@agent-playbook-suite && codex plugin add agent-playbook-suite@agent-playbook-suite)"
@@ -36,8 +37,11 @@ if command -v codex >/dev/null 2>&1; then
   fi
 fi
 
-if python3 -m pip show docs-cli >/dev/null 2>&1; then
-  step "docs-cli"
+if command -v pipx >/dev/null 2>&1 && pipx list 2>/dev/null | grep -q "package docs-cli"; then
+  step "docs-cli (pipx)"
+  pipx upgrade docs-cli; docs --version
+elif python3 -m pip show docs-cli >/dev/null 2>&1; then
+  step "docs-cli (pip)"
   python3 -m pip install --quiet --upgrade docs-cli && docs --version
 else
   echo "-- docs-cli not installed here; skipping"
