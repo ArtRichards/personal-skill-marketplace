@@ -29,7 +29,10 @@ Before any edit, confirm the checkout is on the host's branch:
 **Where this skill itself lives:** like every ArtRichards-authored skill, the
 source is the `~/opt/personal-skill-marketplace` clone on each host, symlinked
 into `~/.claude/skills/`. Edit it there, commit, push, and `git pull` on the
-other hosts (see that repo's README). Never edit the plugin cache copy.
+other hosts (see that repo's README). Never edit the plugin cache copy. When
+asked to "update my ArtRichards skills", run
+`~/opt/personal-skill-marketplace/update-skills.sh` and tell the operator to
+restart the agent.
 
 **Bootstrapping a new host:** `git clone git@github.com:ArtRichards/system-docs.git ~/system-docs`,
 then `git checkout -b $(hostname) main`, fill the templates with a first

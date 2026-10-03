@@ -47,6 +47,16 @@ git clone git@github.com:ArtRichards/personal-skill-marketplace.git ~/opt/person
 ~/opt/personal-skill-marketplace/install-skills.sh
 ```
 
+**To update everything at once** (this clone, the `agent-playbook-suite` plugin for
+Claude Code and Codex, and `docs-cli`):
+
+```bash
+~/opt/personal-skill-marketplace/update-skills.sh
+```
+
+Telling Claude or Codex "update my ArtRichards skills" means: run that script, then
+restart the agent so the skill index reloads.
+
 `install-skills.sh` is idempotent. It symlinks every `plugins/<plugin>/skills/<skill>/`
 into `~/.claude/skills/<skill>` (and `~/.codex/skills/<skill>` when that directory
 exists), re-points stale links, and refuses to clobber a real directory. Re-run it
@@ -94,6 +104,7 @@ codex plugin add create-deb@personal-skill-marketplace
 
 - `.claude-plugin/marketplace.json` — Claude Code marketplace manifest
 - `.agents/plugins/marketplace.json` — Codex marketplace manifest
+- `update-skills.sh` — one-shot updater for every ArtRichards skill source on a host
 - `install-skills.sh` — symlinks all skills into `~/.claude/skills` / `~/.codex/skills`
 - `plugins/<plugin>/` — one directory per plugin, each with its own
   `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and `skills/`
@@ -113,8 +124,8 @@ codex plugin add create-deb@personal-skill-marketplace
    `create-deb-v0.1.0`). The marketplace installs from `main`; tags are
    release markers for history and rollback. (The repo-wide `v0.1.0` tag
    predates the second plugin.)
-5. Push, then `git pull --ff-only` the `~/opt/personal-skill-marketplace` clone
-   on every host listed under Install.
+5. Push, then run `~/opt/personal-skill-marketplace/update-skills.sh` on every
+   host listed under Install.
 
 ## License
 
