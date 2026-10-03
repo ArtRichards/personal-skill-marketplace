@@ -18,7 +18,8 @@ fi
 "$REPO/install-skills.sh"
 
 if command -v claude >/dev/null 2>&1; then
-  if claude plugin list 2>/dev/null | grep -q "agent-playbook-suite@agent-playbook-suite"; then
+  claude_plugins="$(claude plugin list 2>&1 || true)"   # capture first: the CLI may exit non-zero after printing
+  if grep -q "agent-playbook-suite@agent-playbook-suite" <<<"$claude_plugins"; then
     step "Claude Code: agent-playbook-suite"
     claude plugin marketplace update agent-playbook-suite || true
     claude plugin update agent-playbook-suite@agent-playbook-suite || true
@@ -28,7 +29,8 @@ if command -v claude >/dev/null 2>&1; then
 fi
 
 if command -v codex >/dev/null 2>&1; then
-  if codex plugin list 2>&1 | grep -q "agent-playbook-suite@agent-playbook-suite"; then
+  codex_plugins="$(codex plugin list 2>&1 || true)"     # codex exits 101 after a successful listing
+  if grep -q "agent-playbook-suite@agent-playbook-suite" <<<"$codex_plugins"; then
     step "Codex: agent-playbook-suite marketplace"
     codex plugin marketplace upgrade agent-playbook-suite || true
     echo "   (if Codex keeps the old copy: codex plugin remove agent-playbook-suite@agent-playbook-suite && codex plugin add agent-playbook-suite@agent-playbook-suite)"
