@@ -1,0 +1,28 @@
+{
+  "name": "next-task",
+  "version": "0.1.0",
+  "description": "Begin implementation of the next task or subtask using the TDD phases, after reading the project's status, foundation log, data plan, architecture, and charter docs.",
+  "author": {
+    "name": "Art Richards"
+  },
+  "repository": "https://github.com/ArtRichards/personal-skill-marketplace",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "tdd",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Next Task",
+    "shortDescription": "Start the next task/subtask with TDD phases.",
+    "longDescription": "next-task kicks off implementation of the next task or subtask using the TDD phases, first reading the project's status, foundation log, data plan, architecture, and charter documents.",
+    "developerName": "Art Richards",
+    "category": "Productivity",
+    "capabilities": [
+      "TDD-phase task kickoff",
+      "Project doc orientation"
+    ],
+    "defaultPrompt": "Begin the next task using the next-task skill."
+  }
+}

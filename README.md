@@ -36,6 +36,13 @@ templates for `control`, `postinst`, and `postrm`. Moved here from the former
 standalone [create-deb-skill](https://github.com/ArtRichards/create-deb-skill)
 repository.
 
+### next-task
+
+Kicks off implementation of the next task or subtask using the TDD phases,
+after reading the project's status, foundation log, data plan, architecture,
+and charter docs. Moved here from a loose `~/.claude/skills/next-task` on
+`robbie` (2026-10-03).
+
 ## Install
 
 ### On my own hosts (the convention for every ArtRichards-authored skill)
@@ -60,6 +67,12 @@ Do **not** also `claude plugin install` these plugins on such a host — the ski
 would be listed twice. Edit skills in the clone, commit, push, then pull on the other
 hosts. Hosts set up this way: `robbie`, `voyager`.
 
+Skills authored by Art that live in **other** repos keep their own install path and are
+not duplicated here: the agent-playbook-suite skills (`create-milestones`,
+`project-foundation`, `ship-milestone`, `simplify`, `sync-and-commit`, `docs`, …) come
+from the `ArtRichards/agent-playbook-suite` plugin via `claude plugin install`, and the
+`docs` skill also ships inside the `docs-cli` package.
+
 ### Anywhere else (marketplace install)
 
 For Claude Code:
@@ -68,6 +81,7 @@ For Claude Code:
 claude plugin marketplace add ArtRichards/personal-skill-marketplace
 claude plugin install update-system-status@personal-skill-marketplace
 claude plugin install create-deb@personal-skill-marketplace
+claude plugin install next-task@personal-skill-marketplace
 ```
 
 For Codex:
@@ -76,6 +90,7 @@ For Codex:
 codex plugin marketplace add ArtRichards/personal-skill-marketplace --ref main
 codex plugin add update-system-status@personal-skill-marketplace
 codex plugin add create-deb@personal-skill-marketplace
+codex plugin add next-task@personal-skill-marketplace
 ```
 
 ## Layout
