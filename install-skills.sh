@@ -8,6 +8,11 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 link_into() {
   local target_dir="$1"
   [ -d "$target_dir" ] || return 0
+  # prune links into this clone whose skill no longer exists (retired plugins)
+  for l in "$target_dir"/*; do
+    [ -L "$l" ] || continue
+    case "$(readlink "$l")" in "$REPO"/*|"$HOME"/opt/personal-skill-marketplace/*) [ -e "$l" ] || { rm "$l"; echo "prune   $l"; } ;; esac
+  done
   for skill in "$REPO"/plugins/*/skills/*/; do
     skill="${skill%/}"
     [ -f "$skill/SKILL.md" ] || continue

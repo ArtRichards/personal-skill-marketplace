@@ -36,13 +36,6 @@ templates for `control`, `postinst`, and `postrm`. Moved here from the former
 standalone [create-deb-skill](https://github.com/ArtRichards/create-deb-skill)
 repository.
 
-### next-task
-
-Kicks off implementation of the next task or subtask using the TDD phases,
-after reading the project's status, foundation log, data plan, architecture,
-and charter docs. Moved here from a loose `~/.claude/skills/next-task` on
-`robbie` (2026-10-03).
-
 ## Install
 
 ### On my own hosts (the convention for every ArtRichards-authored skill)
@@ -81,7 +74,6 @@ For Claude Code:
 claude plugin marketplace add ArtRichards/personal-skill-marketplace
 claude plugin install update-system-status@personal-skill-marketplace
 claude plugin install create-deb@personal-skill-marketplace
-claude plugin install next-task@personal-skill-marketplace
 ```
 
 For Codex:
@@ -90,8 +82,13 @@ For Codex:
 codex plugin marketplace add ArtRichards/personal-skill-marketplace --ref main
 codex plugin add update-system-status@personal-skill-marketplace
 codex plugin add create-deb@personal-skill-marketplace
-codex plugin add next-task@personal-skill-marketplace
 ```
+
+## Retired plugins
+
+- `next-task` (0.1.0, 2026-10-03) — deprecated the same day it was added; no longer
+  used. History remains at tag `next-task-v0.1.0`. `install-skills.sh` prunes its
+  symlinks on the next run.
 
 ## Layout
 

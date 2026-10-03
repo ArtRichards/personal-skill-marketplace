@@ -36,21 +36,6 @@
         "packaging",
         "deb"
       ]
-    },
-    {
-      "name": "next-task",
-      "source": "./plugins/next-task",
-      "description": "Begin implementation of the next task or subtask using the TDD phases, after reading the project's status, foundation log, data plan, architecture, and charter docs.",
-      "version": "0.1.0",
-      "author": {
-        "name": "Art Richards"
-      },
-      "category": "Productivity",
-      "tags": [
-        "agent-skills",
-        "tdd",
-        "workflow"
-      ]
     }
   ]
 }
