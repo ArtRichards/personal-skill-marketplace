@@ -1,6 +1,6 @@
 {
   "name": "update-system-status",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Keep a host's ~/system-docs/ accurate: a living system-status record, plan/spec lifecycle with dated archive, and an INDEX.md kept in lockstep with the directory.",
   "author": {
     "name": "Art Richards"

@@ -26,6 +26,11 @@ Before any edit, confirm the checkout is on the host's branch:
 `main` or anything else, stop and fix the checkout first
 (`git -C ~/system-docs checkout <hostname>`); do not edit on the wrong branch.
 
+**Where this skill itself lives:** like every ArtRichards-authored skill, the
+source is the `~/opt/personal-skill-marketplace` clone on each host, symlinked
+into `~/.claude/skills/`. Edit it there, commit, push, and `git pull` on the
+other hosts (see that repo's README). Never edit the plugin cache copy.
+
 **Bootstrapping a new host:** `git clone git@github.com:ArtRichards/system-docs.git ~/system-docs`,
 then `git checkout -b $(hostname) main`, fill the templates with a first
 inventory, add the hostname to the branch list in `README.md` on `main`

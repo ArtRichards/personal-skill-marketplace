@@ -38,6 +38,30 @@ repository.
 
 ## Install
 
+### On my own hosts (the convention for every ArtRichards-authored skill)
+
+One clone per host, skills symlinked from it, updated with `git pull`:
+
+```bash
+git clone git@github.com:ArtRichards/personal-skill-marketplace.git ~/opt/personal-skill-marketplace
+~/opt/personal-skill-marketplace/install-skills.sh
+```
+
+`install-skills.sh` is idempotent. It symlinks every `plugins/<plugin>/skills/<skill>/`
+into `~/.claude/skills/<skill>` (and `~/.codex/skills/<skill>` when that directory
+exists), re-points stale links, and refuses to clobber a real directory. Re-run it
+after adding a plugin. To pick up changes on a host:
+
+```bash
+git -C ~/opt/personal-skill-marketplace pull --ff-only
+```
+
+Do **not** also `claude plugin install` these plugins on such a host — the skills
+would be listed twice. Edit skills in the clone, commit, push, then pull on the other
+hosts. Hosts set up this way: `robbie`, `voyager`.
+
+### Anywhere else (marketplace install)
+
 For Claude Code:
 
 ```bash
@@ -58,6 +82,7 @@ codex plugin add create-deb@personal-skill-marketplace
 
 - `.claude-plugin/marketplace.json` — Claude Code marketplace manifest
 - `.agents/plugins/marketplace.json` — Codex marketplace manifest
+- `install-skills.sh` — symlinks all skills into `~/.claude/skills` / `~/.codex/skills`
 - `plugins/<plugin>/` — one directory per plugin, each with its own
   `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, and `skills/`
   payload
@@ -76,6 +101,8 @@ codex plugin add create-deb@personal-skill-marketplace
    `create-deb-v0.1.0`). The marketplace installs from `main`; tags are
    release markers for history and rollback. (The repo-wide `v0.1.0` tag
    predates the second plugin.)
+5. Push, then `git pull --ff-only` the `~/opt/personal-skill-marketplace` clone
+   on every host listed under Install.
 
 ## License
 
