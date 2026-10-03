@@ -14,7 +14,7 @@ link_into() {
     name="$(basename "$skill")"
     dest="$target_dir/$name"
     if [ -L "$dest" ]; then
-      [ "$(readlink -f "$dest")" = "$skill" ] && { echo "ok      $dest"; continue; }
+      [ "$(readlink -f "$dest")" = "$(readlink -f "$skill")" ] && { echo "ok      $dest"; continue; }
       ln -sfn "$skill" "$dest"; echo "relink  $dest"
     elif [ -e "$dest" ]; then
       echo "SKIP    $dest exists and is not a symlink; remove it by hand to adopt the clone" >&2
