@@ -39,7 +39,10 @@ If unsure, run it — but keep edits minimal. A no-op pass is cheaper than a los
 4. **Handle plan lifecycle** (see next section) — relocate any plan authored elsewhere this turn into `~/system-docs/`, and archive any plan completed this turn.
 5. **Refresh `INDEX.md`** (see "Index" section) — every doc in `~/system-docs/` (active + archived) must have exactly one entry; remove entries whose files no longer exist, add entries for new files, and correct any drifted descriptions.
 6. **Bump the `_Last updated:`** header line in `system-status.md` to today's date plus a one-line hint of what changed.
-7. **Stop.** Do not commit, do not push — `~/system-docs/` lives in `$HOME`, not in a project repo.
+7. **Commit and push.** `~/system-docs/` is its own git repo with a **private**
+   remote. Run `git -C ~/system-docs add -A && git -C ~/system-docs commit -m "<one-line summary of this pass>" && git -C ~/system-docs push`.
+   Never change that remote's visibility or push the docs anywhere public —
+   they contain host hardware, service and sudo-policy details.
 
 ## Plan lifecycle
 
