@@ -1,6 +1,6 @@
 ---
 name: update-system-status
-description: Keep `~/system-docs/` accurate — update `system-status.md`, ensure new plans/specs land there, archive completed plans to `~/system-docs/archive/YYYY-MM-DD/`, and keep `~/system-docs/INDEX.md` in sync with the directory's contents. Trigger proactively at the end of turns that touched system state (services, ZFS pools, disks, hardware, sudo grants, samba, networking, kernel/driver, persistent system-level configs), that surfaced new system facts (smartctl findings, version pins, latent quirks), or that authored/completed a system plan. Skip for purely application or code work that doesn't change the operator's mental model of the host. Always invoke without asking when the criteria match.
+description: Keep `~/system-docs/` accurate (private repo ArtRichards/system-docs, one branch per host; always work on the `<hostname>` branch, never `main`) — update `system-status.md`, ensure new plans/specs land there, archive completed plans to `~/system-docs/archive/YYYY-MM-DD/`, and keep `~/system-docs/INDEX.md` in sync with the directory's contents. Trigger proactively at the end of turns that touched system state (services, ZFS pools, disks, hardware, sudo grants, samba, networking, kernel/driver, persistent system-level configs), that surfaced new system facts (smartctl findings, version pins, latent quirks), or that authored/completed a system plan. Skip for purely application or code work that doesn't change the operator's mental model of the host. Always invoke without asking when the criteria match.
 ---
 
 # Update System Status
@@ -10,6 +10,26 @@ documentation. That includes `system-status.md` (the living facts log), any
 plans/specs/runbooks for system work, the dated archive of completed plans,
 and `INDEX.md` — a one-line-per-doc index that stays in lockstep with the
 directory.
+
+## Repo layout
+
+`~/system-docs/` on every host is a checkout of the **private** GitHub repo
+`ArtRichards/system-docs`, laid out one branch per machine:
+
+- `main` — skeleton only: `README.md`, empty `system-status.md` and `INDEX.md`
+  templates, `.gitignore`, empty `archive/`. **Never commit host facts to main.**
+- `<hostname>` — that host's live docs (e.g. `robbie`, `voyager`). Each host's
+  checkout stays on its own branch and tracks `origin/<hostname>`.
+
+Before any edit, confirm the checkout is on the host's branch:
+`git -C ~/system-docs branch --show-current` must equal `hostname`. If it is
+`main` or anything else, stop and fix the checkout first
+(`git -C ~/system-docs checkout <hostname>`); do not edit on the wrong branch.
+
+**Bootstrapping a new host:** `git clone git@github.com:ArtRichards/system-docs.git ~/system-docs`,
+then `git checkout -b $(hostname) main`, fill the templates with a first
+inventory, add the hostname to the branch list in `README.md` on `main`
+(separate commit on `main`), and `git push -u origin $(hostname)`.
 
 ## When to run
 
@@ -39,10 +59,13 @@ If unsure, run it — but keep edits minimal. A no-op pass is cheaper than a los
 4. **Handle plan lifecycle** (see next section) — relocate any plan authored elsewhere this turn into `~/system-docs/`, and archive any plan completed this turn.
 5. **Refresh `INDEX.md`** (see "Index" section) — every doc in `~/system-docs/` (active + archived) must have exactly one entry; remove entries whose files no longer exist, add entries for new files, and correct any drifted descriptions.
 6. **Bump the `_Last updated:`** header line in `system-status.md` to today's date plus a one-line hint of what changed.
-7. **Commit and push.** `~/system-docs/` is its own git repo with a **private**
-   remote. Run `git -C ~/system-docs add -A && git -C ~/system-docs commit -m "<one-line summary of this pass>" && git -C ~/system-docs push`.
-   Never change that remote's visibility or push the docs anywhere public —
-   they contain host hardware, service and sudo-policy details.
+7. **Commit and push to the host branch.** Re-check
+   `git -C ~/system-docs branch --show-current` equals the hostname, then run
+   `git -C ~/system-docs add -A && git -C ~/system-docs commit -m "<hostname>: <one-line summary of this pass>" && git -C ~/system-docs push`.
+   The branch tracks `origin/<hostname>`, so a plain `push` is correct. Never
+   push to `main`, never change the remote's visibility, and never push the
+   docs anywhere public — they contain host hardware, service and sudo-policy
+   details.
 
 ## Plan lifecycle
 
@@ -62,8 +85,8 @@ runbooks. Enforce that on every pass:
   done (e.g., Plan 1 of a redundancy+recovery doc), do **not** archive yet —
   note the completion inline and archive once the whole document is done.
 
-Use `git mv` only inside a repo; `~/system-docs/` is not versioned, so plain
-`mv` is correct here.
+`~/system-docs/` is a git checkout, so use `git mv` for relocations and
+archiving so history follows the file.
 
 ## Index
 
@@ -140,6 +163,7 @@ The hint should name the most consequential item, not list every edit. If multip
 - Is the revert path captured for anything reversible?
 - Is the file still readable end-to-end (no orphan headers, no dead links)?
 - Did `_Last updated:_` get bumped?
+- Is the checkout on the host's own branch (not `main`), and did the push land on `origin/<hostname>`?
 - Does `INDEX.md` match the current contents of `~/system-docs/` (no stale entries, no missing ones)?
 
 If yes to all, the pass is done.
