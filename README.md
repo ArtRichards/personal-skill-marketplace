@@ -68,7 +68,7 @@ git -C ~/opt/personal-skill-marketplace pull --ff-only
 
 Do **not** also `claude plugin install` these plugins on such a host — the skills
 would be listed twice. Edit skills in the clone, commit, push, then pull on the other
-hosts. Hosts set up this way: `robbie`, `voyager`.
+hosts. Hosts set up this way: `monitor`, `robbie`, `voyager`.
 
 Skills authored by Art that live in **other** repos keep their own install path and are
 not duplicated here: the agent-playbook-suite skills (`create-milestones`,
